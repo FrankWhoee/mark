@@ -33,7 +33,6 @@ x=0
 y=0
 z=0
 turtle.digDown()
-move("down")
 while z<zf do
 	while y<yf do
 		x=0
