@@ -9,6 +9,21 @@ function is_inventory_full()
 	return true
 end
 
+function move(direction)
+	if direction == "forward":
+		while not move("forward") do
+		end
+	elif direction == "back":
+		while not move("back") do
+		end
+	elif direction == "up":
+		while not move("up") do
+		end
+	elif direction == "down":
+		while not move("down") do
+		end
+	end
+end
 
 xf = tonumber(args[2])
 yf = tonumber(args[1])
@@ -18,24 +33,24 @@ x=0
 y=0
 z=0
 turtle.digDown()
-turtle.down()
+move("down")
 while z<zf do
 	while y<yf do
 		x=0
 		while x<xf-1 do
 			turtle.dig()
-			turtle.forward()
+			move("forward")
 			x = x + 1
 		end
 		if y % 2 == 0 then
 			turtle.turnRight()
 			turtle.dig()
-			turtle.forward()
+			move("forward")
 			turtle.turnRight()
 		else
 			turtle.turnLeft()
 			turtle.dig()
-			turtle.forward()
+			move("forward")
 			turtle.turnLeft()
 		end
 		y = y + 1
@@ -46,13 +61,13 @@ while z<zf do
 		turtle.turnRight()
 		while y < yf do
 			turtle.dig()
-			turtle.forward()
+			move("forward")
 			y = y + 1
 		end
 		turtle.turnLeft()
 		while x < xf do
 			turtle.dig()
-			turtle.forward()
+			move("forward")
 			x = x + 1
 		end
 		turtle.turnRight()
@@ -61,7 +76,7 @@ while z<zf do
 		turtle.turnLeft()
 		while y < yf do
 			turtle.dig()
-			turtle.forward()
+			move("forward")
 			y = y + 1
 		end
 		turtle.turnRight()
@@ -69,13 +84,13 @@ while z<zf do
 	if is_inventory_full() then
 		while z > 0 do
 			turtle.digUp()
-			turtle.up()
+			move("up")
 			z = z - 1
 		end
 		break
 	end
 	turtle.digDown()
-	turtle.down()
+	move("down")
 	z = z + 1
 	x=0
 	y=0
