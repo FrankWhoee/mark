@@ -1,4 +1,29 @@
 args = {...}
 file = args[1]
+
+local function get(paste)
+    write( "Connecting to raw.githubusercontent.com... " )
+    local response = http.get(
+        "https://raw.githubusercontent.com/FrankWhoee/mark/main/"..textutils.urlEncode( paste )
+    )
+        
+    if response then
+        print( "Success." )
+        
+        local sResponse = response.readAll()
+        response.close()
+        return sResponse
+    else
+        print( "Failed." )
+    end
+end
+
 shell.run("rm " .. file)
-shell.run("wget https://raw.githubusercontent.com/FrankWhoee/mark/main/" .. file .. " " .. file)
+local res = get(file)
+if res then        
+        local file = fs.open(file, "w" )
+        file.write( res )
+        file.close()
+        
+        print( "Downloaded as "..file )
+end 
