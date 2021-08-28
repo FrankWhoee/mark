@@ -1,0 +1,18 @@
+x0, y0, z0 = gps.locate()
+while x0 == nil do
+x0, y0, z0 = gps.locate()
+end
+turtle.up()
+turtle.dig()
+turtle.forward()
+xf, yf, zf = gps.locate()
+turtle.back()
+turtle.down()
+if zf < z0 then
+   turtle.turnRight()
+elseif zf > z0 then
+    turtle.turnLeft()
+elseif xf < x0 then
+    turtle.turnRight()
+    turtle.turnRight()
+end

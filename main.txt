@@ -1,0 +1,76 @@
+rednet.open("back")
+function startswith(text, prefix)
+    return text:find(prefix, 1, true) == 1
+end
+
+namefile = fs.open("name","r")
+name = "Anonymous"
+if namefile == nil then
+	print("No name found. Use name X to name yourself, where X is your name.")
+else
+	name = namefile.readAll()
+end
+
+
+parallel.waitForAny(
+  function()
+	print("Ready for input")
+	while true do
+		command = io.read()
+		if startswith(command, "ubereats") then
+			number = tonumber(string.sub(command,10,string.len(command)))
+			x,y,z = gps.locate()
+			x = math.floor(x)
+			y = math.floor(y)
+			z = math.floor(z)
+			 
+			d = math.sqrt(math.pow(39-x,2) + math.pow(63-z,2))
+			if d > 128 then
+				print("You are too far away from the UberEats Amazon Prime Gaming Fulfillment Center. Go closer to spawn! (39,77,63)")
+			else 
+				rednet.broadcast(x .. " " .. y .. " " .. z .. " " .. number, "prime")
+				senderID, message, distance, protocl = rednet.receive("order-status", 10)
+				if message ~= nil then
+					print("[SUCCESS] Order confirmed!")
+				else
+					print("[WARN] Confirmation timed out. The turtle might be busy or inactivated right now. Please try ordering again later.")
+				end
+			end
+		elseif startswith(command, "locate") then
+			if string.len(command) > 6 then
+				number = tonumber(string.sub(command,10,string.len(command)))
+			else
+				number = 7
+			end
+			x,y,z = gps.locate()
+			x = math.floor(x)
+			y = math.floor(y)
+			z = math.floor(z)
+			rednet.broadcast(name .. " is at " .. x .. " " .. y .. " " .. z .. " and has requested all player locations.", "request-location")
+			for i=1,number,1 do
+				senderID, message, distance, protocol = rednet.receive("location", 5)
+				if message ~= nil then
+					print(message)
+				else
+					print("[WARN] Ping " .. i .. " has timed out.")
+				end
+			end
+		elseif startswith(command, "name") then
+			namefile = fs.open("name",'w')
+			name = string.sub(command,6,string.len(command))
+			namefile.write(name)
+		end
+	end
+  end,
+function()
+	while true do
+		senderID, message, distance, protocol = rednet.receive("request-location")
+		print(message)
+		x,y,z = gps.locate()
+		x = math.floor(x)
+		y = math.floor(y)
+		z = math.floor(z)
+		rednet.broadcast(name .. " is at " .. x .. " " .. y .. " " .. z, "location")
+	end
+end
+)

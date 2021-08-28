@@ -1,0 +1,84 @@
+args = {...}
+function is_inventory_full()
+	for i=1,16,1 do
+		turtle.select(i)
+		if turtle.getItemCount() == 0 then
+			return false
+		end
+	end
+	return true
+end
+
+
+xf = tonumber(args[2])
+yf = tonumber(args[1])
+zf = tonumber(args[3])
+
+x=0
+y=0
+z=0
+turtle.digDown()
+turtle.down()
+while z<zf do
+	while y<yf do
+		x=0
+		while x<xf-1 do
+			turtle.dig()
+			turtle.forward()
+			x = x + 1
+		end
+		if y % 2 == 0 then
+			turtle.turnRight()
+			turtle.dig()
+			turtle.forward()
+			turtle.turnRight()
+		else
+			turtle.turnLeft()
+			turtle.dig()
+			turtle.forward()
+			turtle.turnLeft()
+		end
+		y = y + 1
+	end
+	x = 0
+	y = 0
+	if y % 2 == 1 then
+		turtle.turnRight()
+		while y < yf do
+			turtle.dig()
+			turtle.forward()
+			y = y + 1
+		end
+		turtle.turnLeft()
+		while x < xf do
+			turtle.dig()
+			turtle.forward()
+			x = x + 1
+		end
+		turtle.turnRight()
+		turtle.turnRight()
+	else
+		turtle.turnLeft()
+		while y < yf do
+			turtle.dig()
+			turtle.forward()
+			y = y + 1
+		end
+		turtle.turnRight()
+	end
+	if is_inventory_full() then
+		while z > 0 do
+			turtle.digUp()
+			turtle.up()
+			z = z - 1
+		end
+		break
+	end
+	turtle.digDown()
+	turtle.down()
+	z = z + 1
+	x=0
+	y=0
+end
+-- 4 70 107
+-- 1 70 104

@@ -1,0 +1,128 @@
+function select_first()
+	for i=1,16,1 do
+		turtle.select(i)
+		if turtle.getItemCount() > 0 then break end
+	end
+end
+
+function orient ()
+    x0, y0, z0 = gps.locate()
+    turtle.up()
+    turtle.dig()
+    turtle.forward()
+    xf, yf, zf = gps.locate()
+    turtle.back()
+    turtle.down()
+    if zf < z0 then
+        turtle.turnRight()
+    elseif zf > z0 then
+        turtle.turnLeft()
+    elseif xf < x0 then
+        turtle.turnRight()
+        turtle.turnRight()
+    end
+end 
+ 
+function navigate (xf,yf,zf)
+    x, y, z = gps.locate()
+	tempy = y + 1
+    while y < tempy do
+            y = y + 1
+            turtle.digUp()
+            turtle.up()
+    end
+    if x < xf then
+        while x < xf do
+            x = x + 1
+            turtle.dig()
+            turtle.forward()
+        end
+    else
+        turtle.turnRight()
+        turtle.turnRight()
+        while x > xf do
+            x = x - 1
+            turtle.dig()
+            turtle.forward()
+        end
+        turtle.turnRight()
+        turtle.turnRight()
+    end
+    if z < zf then
+        turtle.turnRight()
+        while z < zf do
+            z = z + 1
+            turtle.dig()
+            turtle.forward()
+        end
+        turtle.turnLeft()
+    else
+        turtle.turnLeft()
+        while z > zf do
+            z = z - 1
+            turtle.dig()
+            turtle.forward()
+        end
+        turtle.turnRight()
+    end
+    if y < yf then
+        while y < coords[2] do
+            y = y + 1
+            turtle.digUp()
+            turtle.up()
+        end
+    else
+        while y > yf do
+            y = y - 1
+            turtle.digDown()
+            turtle.down()
+        end
+    end
+end
+
+x0,y0,z0 = gps.locate()
+
+args = {...}
+xf = tonumber(args[2])
+yf = tonumber(args[1])
+
+select_first()
+
+x=0
+y=0
+while y<yf do
+	x=0
+	while x<xf-1 do
+		if turtle.getItemCount() == 0 then
+			select_first()
+		end
+		turtle.dig()
+		turtle.forward()
+		turtle.turnRight()
+		turtle.turnRight()
+		turtle.place()
+		turtle.turnRight()
+		turtle.turnRight()
+		x = x + 1
+	end
+	if y %2 == 0 then
+		turtle.turnRight()
+		turtle.dig()
+		turtle.forward()
+		turtle.turnRight()
+		turtle.turnRight()
+		turtle.place()
+		turtle.turnLeft()
+	else
+		turtle.turnLeft()
+		turtle.dig()
+		turtle.forward()
+		turtle.turnRight()
+		turtle.turnRight()
+		turtle.place()
+		turtle.turnRight()
+	end
+	 y = y + 1
+end
+orient()
+navigate(x0,y0,z0)

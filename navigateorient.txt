@@ -1,0 +1,73 @@
+function orient ()
+    x0, y0, z0 = gps.locate()
+    turtle.up()
+    turtle.dig()
+    turtle.forward()
+    xf, yf, zf = gps.locate()
+    turtle.back()
+    turtle.down()
+    if zf < z0 then
+        turtle.turnRight()
+    elseif zf > z0 then
+        turtle.turnLeft()
+    elseif xf < x0 then
+        turtle.turnRight()
+        turtle.turnRight()
+    end
+end 
+ 
+function navigate (xf,yf,zf)
+    x, y, z = gps.locate()
+    while y < 93 do
+            y = y + 1
+            turtle.digUp()
+            turtle.up()
+    end
+    if x < xf then
+        while x < xf do
+            x = x + 1
+            turtle.dig()
+            turtle.forward()
+        end
+    else
+        turtle.turnRight()
+        turtle.turnRight()
+        while x > xf do
+            x = x - 1
+            turtle.dig()
+            turtle.forward()
+        end
+        turtle.turnRight()
+        turtle.turnRight()
+    end
+    if z < zf then
+        turtle.turnRight()
+        while z < zf do
+            z = z + 1
+            turtle.dig()
+            turtle.forward()
+        end
+        turtle.turnLeft()
+    else
+        turtle.turnLeft()
+        while z > zf do
+            z = z - 1
+            turtle.dig()
+            turtle.forward()
+        end
+        turtle.turnRight()
+    end
+    if y < yf then
+        while y < coords[2] do
+            y = y + 1
+            turtle.digUp()
+            turtle.up()
+        end
+    else
+        while y > yf do
+            y = y - 1
+            turtle.digDown()
+            turtle.down()
+        end
+    end
+end

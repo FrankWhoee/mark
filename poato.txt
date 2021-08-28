@@ -1,0 +1,91 @@
+math.randomseed(os.time())
+math.random(); math.random(); math.random()
+shell.run("orient")
+
+function find(name)
+	for i=1,16,1 do
+	  turtle.select(i)
+	  detail = turtle.getItemDetail()
+	  if detail != nil and string.find(detail.name, name) then
+		break
+	  end
+	end
+end
+
+potatoes = 0
+while true do
+  success, data = turtle.inspect()
+  turns = 0
+  skip = false
+  while (success and data.state.age ~= 7) do
+	if math.random() < 0.05 then
+		skip = true
+		break
+	end
+    turns = turns + 1
+    turtle.turnRight()
+    turtle.turnRight()
+    success,data=turtle.inspect()
+    os.sleep(1)
+  end
+if turtle.getFuelLevel() < 1000 then
+  print("WARNING: Low Fuel")
+  print("Fuel Report: " .. turtle.getFuelLevel())
+end
+for i=1,16,1 do
+  turtle.select(i)
+  if turtle.refuel() then
+    turtle.refuel(turtle.getItemCount())
+    print("Fuel received. New fuel level: " .. turtle.getFuelLevel())
+    break
+  end
+end
+
+find("minecraft:poisonous_potato")
+print("Dropped " .. turtle.getItemCount() .. " poisonous potatoes")
+turtle.dropDown()
+
+if not skip then
+	turtle.select(1)
+	turtle.dig()
+	turtle.suck()
+	turtle.place()
+	potatoes = potatoes + turtle.getItemCount() - 14
+	todrop = turtle.getItemCount()-14
+	if todrop < 0 then
+		todrop = 0
+	end
+	turtle.dropDown(todrop)
+	if turns % 2 == 0 then
+		turtle.turnRight()
+		turtle.turnRight()
+	end
+	success, data = turtle.inspect()
+	if success and data.state.age == 7 then
+	turtle.dig()
+	turtle.suck()
+	turtle.select(1)
+	turtle.place()
+	potatoes = potatoes + turtle.getItemCount() - 14
+	if todrop < 0 then
+		todrop = 0
+	end
+	turtle.dropDown(todrop)
+	end
+else
+	if turns % 2 == 0 then
+		turtle.turnRight()
+		turtle.turnRight()
+	end
+end
+turtle.turnLeft()
+success,data = turtle.inspect()
+if success and data.name == "minecraft:cobblestone" then
+  print("Harvested " .. potatoes .. " potatoes.")
+  potatoes = 0
+  turtle.turnRight()
+else
+  turtle.forward()
+  turtle.turnLeft()
+end
+end

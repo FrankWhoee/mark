@@ -1,0 +1,149 @@
+sapling_slot = 1
+function harvest (length, rowpairs)
+height=30
+y=0
+x = 0
+x2= 0
+while y<height do
+    x=0 
+	levelClear = true
+    while x2<(rowpairs * 2) do
+        while x<length do
+            if turtle.dig() then
+				levelClear = false
+			end
+            turtle.forward()
+            turtle.suck()
+            x = x + 1
+        end
+        x = 0
+        if x2 % 2 == 1 then
+            turtle.turnLeft()
+            if turtle.dig() then
+				levelClear = false
+			end
+            turtle.forward()
+            turtle.turnLeft()
+        else
+            turtle.turnRight()
+            if turtle.dig() then
+				levelClear = false
+			end
+            turtle.forward()
+            turtle.turnRight()
+        end
+        x2 = x2 + 1
+    end
+    turtle.turnLeft()
+    while x<x2 do
+        turtle.forward()
+        x = x + 1
+    end
+    turtle.turnRight()
+    turtle.digUp()
+    turtle.up()
+    y = y + 1
+    x2 = 0
+	
+	if levelClear then break end
+end
+while y>0 do
+    turtle.down()
+    y = y - 1
+end
+turtle.turnLeft()
+turtle.forward()
+turtle.turnRight()
+turtle.turnRight()
+turtle.down()
+refueled = false
+for i=1,16,1 do
+  turtle.select(i)
+  if turtle.getItemDetail() == nil then
+    print("skip")
+  elseif turtle.getItemDetail().name == "minecraft:oak_log" then
+    if not refueled then
+      turtle.refuel(6)
+      refueled = true
+  end
+  turtle.drop()
+  elseif turtle.getItemDetail().name == "minecraft:oak_sapling" then
+     sapling_slot = turtle.getSelectedSlot()
+  end
+end
+end
+ 
+function plant (length, rowpairs)
+turtle.up()
+turtle.turnLeft()
+turtle.select(sapling_slot)
+y0=10
+y = 0
+x = 0
+x2= 0
+print("Starting planting...")
+print("Raising demeter")
+while not turtle.up() do
+end
+print("Planting...")
+while x2<(rowpairs * 2) do
+    while x<length do
+		if turtle.getItemCount() == 0 then
+			for i=1,16,1 do
+				turtle.select(i)
+				detail = turtle.getItemDetail()
+				if detail ~= nil and detail.name == "minecraft:oak_sapling" then
+					break
+				end
+				
+			end
+		end
+        turtle.dig()
+        turtle.placeDown()
+        turtle.forward()
+        turtle.suck()
+        x = x + 1
+    end
+    x = 0
+    if x2 % 2 == 1 then
+        turtle.turnLeft()
+        turtle.dig()
+        turtle.forward()
+        turtle.turnLeft()
+    else
+        turtle.turnRight()
+        turtle.dig()
+        turtle.forward()
+        turtle.turnRight()
+    end
+    x2 = x2 + 1
+end
+turtle.turnLeft()
+while x<x2 do
+    turtle.dig()
+    turtle.forward()
+    
+    x = x + 1
+end
+turtle.turnRight()
+turtle.digDown()
+turtle.down()
+end
+ 
+while true do
+harvest(9,2)
+plant(9,2)
+os.sleep(600)
+if turtle.getFuelLevel() < 1000 then
+  print("WARNING: Low Fuel")
+  print("Fuel Report: " .. turtle.getFuelLevel())
+end
+for i=1,16,1 do
+  turtle.select(i)
+  if turtle.refuel() then
+    turtle.refuel(turtle.getItemCount())
+    print("Fuel received. New fuel level: " .. turtle.getFuelLevel())
+    break
+  end
+end
+end
