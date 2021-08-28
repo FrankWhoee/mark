@@ -6,7 +6,7 @@ function find(name)
 	for i=1,16,1 do
 	  turtle.select(i)
 	  detail = turtle.getItemDetail()
-	  if detail != nil and string.find(detail.name, name) then
+	  if detail != nil and string.find(detail.name, name) == nil then
 		break
 	  end
 	end
