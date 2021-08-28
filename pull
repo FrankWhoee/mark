@@ -21,9 +21,9 @@ end
 shell.run("rm " .. file)
 local res = get(file)
 if res then        
-        local file = fs.open(file, "w" )
-        file.write( res )
-        file.close()
+        local f = fs.open(file, "w" )
+        f.write( res )
+        f.close()
         
-        print( "Downloaded as "..file )
+        print( "Downloaded as " .. file )
 end 
