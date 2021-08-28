@@ -1,3 +1,4 @@
+args = {...}
 file = args[1]
 shell.run("rm " .. file)
 shell.run("wget https://raw.githubusercontent.com/FrankWhoee/mark/main/" .. file .. " " .. file)
