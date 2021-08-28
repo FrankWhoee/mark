@@ -1,0 +1,11 @@
+dumplist = {"minecraft:cobblestone", "minecraft:stone"}
+for i=1,16,1 do
+	turtle.select(i)
+	detail = turtle.getItemDetail() 
+	for n,v in ipairs(dumplist) do
+		if detail ~= nil and string.find(detail.name, v) ~= nil then
+			turtle.dropDown()
+			break
+		end
+	end
+end
