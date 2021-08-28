@@ -11,16 +11,16 @@ end
 
 function move(direction)
 	if direction == "forward" then
-		while not move("forward") do
+		while not turtle.forward() do
 		end
-	elif direction == "back" then
-		while not move("back") do
+	elseif direction == "back" then
+		while not turtle.back() do
 		end
-	elif direction == "up" then
-		while not move("up") do
+	elseif direction == "up" then
+		while not turtle.up() do
 		end
-	elif direction == "down" then
-		while not move("down") do
+	elseif direction == "down" then
+		while not turtle.down() do
 		end
 	end
 end
