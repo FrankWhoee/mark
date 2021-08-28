@@ -2,15 +2,8 @@ math.randomseed(os.time())
 math.random(); math.random(); math.random()
 shell.run("orient")
 
-function find(name)
-	for i=1,16,1 do
-	  turtle.select(i)
-	  detail = turtle.getItemDetail()
-	  if detail != nil and string.find(detail.name, name) == nil then
-		break
-	  end
-	end
-end
+ -- one line for easy copy paste --
+function find(name)for i=1,16,1 do turtle.select(i) detail = turtle.getItemDetail() if detail ~= nil and string.find(detail.name, name) ~= nil then return true end end return false end
 
 potatoes = 0
 while true do
