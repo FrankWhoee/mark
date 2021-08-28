@@ -10,16 +10,16 @@ function is_inventory_full()
 end
 
 function move(direction)
-	if direction == "forward":
+	if direction == "forward" then
 		while not move("forward") do
 		end
-	elif direction == "back":
+	elif direction == "back" then
 		while not move("back") do
 		end
-	elif direction == "up":
+	elif direction == "up" then
 		while not move("up") do
 		end
-	elif direction == "down":
+	elif direction == "down" then
 		while not move("down") do
 		end
 	end
