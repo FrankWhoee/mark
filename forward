@@ -1,2 +1,9 @@
-turtle.dig()
-turtle.forward()
+args = {...}
+if table.getn(args) == 0 then
+	moves = 1
+else
+	moves = args[1]
+for i=1,moves,1 do
+	turtle.dig()
+	turtle.forward()
+end
