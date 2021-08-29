@@ -92,6 +92,7 @@ while z<zf do
 		end
 		break
 	end
+	move("down")
 	z = z + 1
 	x=0
 	y=0
