@@ -3,7 +3,7 @@ args = {...}
 function move(direction,force)
 	force = force or false
 	if direction == "forward" then
-		while not move("forward", true) do
+		while not turtle.forward() do
 			if force then turtle.dig() end
 		end
 	elseif direction == "back" then
@@ -11,11 +11,11 @@ function move(direction,force)
 			if force then turtle.turnLeft() turtle.turnLeft() turtle.dig() turtle.turnLeft() turtle.turnLeft() end
 		end
 	elseif direction == "up" then
-		while not move("up", true) do
+		while not turtle.up() do
 			if force then turtle.digUp() end
 		end
 	elseif direction == "down" then
-		while not move("down", true) do
+		while not turtle.down() do
 			if force then turtle.digDown() end
 		end
 	end

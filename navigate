@@ -1,9 +1,30 @@
+function move(direction,force)
+	force = force or false
+	if direction == "forward" then
+		while not turtle.forward() do
+			if force then turtle.dig() end
+		end
+	elseif direction == "back" then
+		while not turtle.back() do
+			if force then turtle.turnLeft() turtle.turnLeft() turtle.dig() turtle.turnLeft() turtle.turnLeft() end
+		end
+	elseif direction == "up" then
+		while not turtle.up() do
+			if force then turtle.digUp() end
+		end
+	elseif direction == "down" then
+		while not turtle.down() do
+			if force then turtle.digDown() end
+		end
+	end
+end
+
 function orient ()
 	x0, y0, z0 = gps.locate()
 	turtle.dig()
-	turtle.forward()
+	move("forward", true)
 	xf, yf, zf = gps.locate()
-	turtle.back()
+	move("back", true)
 	if zf < z0 then
 		turtle.turnRight()
 	elseif zf > z0 then
@@ -19,13 +40,13 @@ function navigate (xf,yf,zf)
 	while y < 93 do
 			y = y + 1
 			turtle.digUp()
-			turtle.up()
+			move("up", true)
 	end
 	if x < xf then
 		while x < xf do
 			x = x + 1
 			turtle.dig()
-			turtle.forward()
+			move("forward", true)
 		end
 	else
 		turtle.turnRight()
@@ -33,7 +54,7 @@ function navigate (xf,yf,zf)
 		while x > xf do
 			x = x - 1
 			turtle.dig()
-			turtle.forward()
+			move("forward", true)
 		end
 		turtle.turnRight()
 		turtle.turnRight()
@@ -43,7 +64,7 @@ function navigate (xf,yf,zf)
 		while z < zf do
 			z = z + 1
 			turtle.dig()
-			turtle.forward()
+			move("forward", true)
 		end
 		turtle.turnLeft()
 	else
@@ -51,7 +72,7 @@ function navigate (xf,yf,zf)
 		while z > zf do
 			z = z - 1
 			turtle.dig()
-			turtle.forward()
+			move("forward", true)
 		end
 		turtle.turnRight()
 	end
@@ -59,13 +80,13 @@ function navigate (xf,yf,zf)
 		while y < coords[2] do
 			y = y + 1
 			turtle.digUp()
-			turtle.up()
+			move("up", true)
 		end
 	else
 		while y > yf do
 			y = y - 1
 			turtle.digDown()
-			turtle.down()
+			move("down", true)
 		end
 	end
 end
