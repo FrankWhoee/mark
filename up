@@ -1,0 +1,2 @@
+turtle.digUp()
+turtle.up()
