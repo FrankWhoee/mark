@@ -1,5 +1,5 @@
 args = {...}
-if table.getn(args) < 2 or table.get(n) > 2 then
+if table.getn(args) < 2 or table.getn(args) > 2 then
 	print("Usage: bounce I direction[XY/Z+/Z-]")
 elseif args[2] == "Z+" then
 	moves = args[1]
