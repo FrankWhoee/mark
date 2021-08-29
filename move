@@ -1,4 +1,26 @@
 args = {...}
+
+function move(direction,force)
+	force = force or false
+	if direction == "forward" then
+		while not move("forward", true) do
+			if force then turtle.dig() end
+		end
+	elseif direction == "back" then
+		while not turtle.back() do
+			if force then turtle.turnLeft() turtle.turnLeft() turtle.dig() turtle.turnLeft() turtle.turnLeft() end
+		end
+	elseif direction == "up" then
+		while not move("up", true) do
+			if force then turtle.digUp() end
+		end
+	elseif direction == "down" then
+		while not move("down", true) do
+			if force then turtle.digDown() end
+		end
+	end
+end
+
 if table.getn(args) < 2 or table.getn(args) > 3 then
 	print("Usage: move X Z order[optional]")
 else
@@ -11,37 +33,37 @@ else
 			turtle.turnRight()
 			for i=1,x * -1,1 do
 				turtle.dig()
-				turtle.forward()
+				move("forward", true)
 			end
 			turtle.turnRight()
 			turtle.turnRight()
 		else
 			for i=1,x,1 do
 				turtle.dig()
-				turtle.forward()
+				move("forward", true)
 			end
 		end
 		if z < 0 then
 			for i=1,z * -1,1 do
 				turtle.digDown()
-				turtle.down()
+				move("down", true)
 			end
 		else
 			for i=1,z,1 do
 				turtle.digUp()
-				turtle.up()
+				move("up", true)
 			end
 		end
 	elseif order == "z" then
 		if z < 0 then
 			for i=1,z * -1,1 do
 				turtle.digDown()
-				turtle.down()
+				move("down", true)
 			end
 		else
 			for i=1,z,1 do
 				turtle.digUp()
-				turtle.up()
+				move("up", true)
 			end
 		end
 		if x < 0 then
@@ -49,14 +71,14 @@ else
 			turtle.turnRight()
 			for i=1,x * -1,1 do
 				turtle.dig()
-				turtle.forward()
+				move("forward", true)
 			end
 			turtle.turnRight()
 			turtle.turnRight()
 		else
 			for i=1,x,1 do
 				turtle.dig()
-				turtle.forward()
+				move("forward", true)
 			end
 		end
 	else
