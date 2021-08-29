@@ -9,18 +9,23 @@ function is_inventory_full()
 	return true
 end
 
-function move(direction)
+function move(direction,force)
+	force = force or false
 	if direction == "forward" then
 		while not turtle.forward() do
+			if force then turtle.dig() end
 		end
 	elseif direction == "back" then
 		while not turtle.back() do
+			if force then turtle.turnLeft() turtle.turnLeft() turtle.dig() turtle.turnLeft() turtle.turnLeft() end
 		end
 	elseif direction == "up" then
 		while not turtle.up() do
+			if force then turtle.digUp() end
 		end
 	elseif direction == "down" then
 		while not turtle.down() do
+			if force then turtle.digDown() end
 		end
 	end
 end
@@ -37,18 +42,18 @@ while z<zf do
 		x=0
 		while x<xf-1 do
 			turtle.dig()
-			move("forward")
+			move("forward",true)
 			x = x + 1
 		end
 		if y % 2 == 0 then
 			turtle.turnRight()
 			turtle.dig()
-			move("forward")
+			move("forward",true)
 			turtle.turnRight()
 		else
 			turtle.turnLeft()
 			turtle.dig()
-			move("forward")
+			move("forward",true)
 			turtle.turnLeft()
 		end
 		y = y + 1
@@ -59,13 +64,13 @@ while z<zf do
 		turtle.turnRight()
 		while y < yf do
 			turtle.dig()
-			move("forward")
+			move("forward",true)
 			y = y + 1
 		end
 		turtle.turnLeft()
 		while x < xf do
 			turtle.dig()
-			move("forward")
+			move("forward",true)
 			x = x + 1
 		end
 		turtle.turnRight()
@@ -74,7 +79,7 @@ while z<zf do
 		turtle.turnLeft()
 		while y < yf do
 			turtle.dig()
-			move("forward")
+			move("forward",true)
 			y = y + 1
 		end
 		turtle.turnRight()
