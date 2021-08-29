@@ -21,25 +21,25 @@ else
 				turtle.forward()
 			end
 		end
-		if y < 0 then
-			for i=1,y * -1,1 do
+		if z < 0 then
+			for i=1,z * -1,1 do
 				turtle.digDown()
 				turtle.down()
 			end
 		else
-			for i=1,y,1 do
+			for i=1,z,1 do
 				turtle.digUp()
 				turtle.up()
 			end
 		end
 	elseif order == "z" then
-		if y < 0 then
-			for i=1,y * -1,1 do
+		if z < 0 then
+			for i=1,z * -1,1 do
 				turtle.digDown()
 				turtle.down()
 			end
 		else
-			for i=1,y,1 do
+			for i=1,z,1 do
 				turtle.digUp()
 				turtle.up()
 			end
