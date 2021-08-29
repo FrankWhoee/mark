@@ -32,7 +32,6 @@ zf = tonumber(args[3])
 x=0
 y=0
 z=0
-turtle.digDown()
 while z<zf do
 	while y<yf do
 		x=0
@@ -88,8 +87,6 @@ while z<zf do
 		end
 		break
 	end
-	turtle.digDown()
-	move("down")
 	z = z + 1
 	x=0
 	y=0
