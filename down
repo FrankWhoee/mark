@@ -7,3 +7,4 @@ for i=1,moves,1 do
 	turtle.digDown()
 	turtle.down()
 end
+end
