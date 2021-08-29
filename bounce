@@ -1,0 +1,40 @@
+args = {...}
+if table.getn(args) < 2 or table.get(n) > 2 then
+	print("Usage: bounce I direction[XY/Z+/Z-]")
+elseif args[2] == "Z+" then
+	moves = args[1]
+	for i=1,moves,1 do
+		turtle.digUp()
+		turtle.up()
+	end
+	for i=1,moves,1 do
+		turtle.digDown()
+		turtle.down()
+	end
+elseif args[2] == "Z-" then
+	moves = args[1]
+	for i=1,moves,1 do
+		turtle.digDown()
+		turtle.down()
+	end
+	for i=1,moves,1 do
+		turtle.digUp()
+		turtle.up()
+	end
+elseif args[2] == "XY" then
+	moves = args[1]
+	for i=1,moves,1 do
+		turtle.dig()
+		turtle.forward()
+	end
+	turtle.turnRight()
+	turtle.turnRight()
+	for i=1,moves,1 do
+		turtle.dig()
+		turtle.forward()
+	end
+	turtle.turnRight()
+	turtle.turnRight()
+else
+	print("Usage: bounce I direction[XY/Z+/Z-]")
+end
